@@ -1,6 +1,16 @@
-import GameItem from "../../molecules/GameItem";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import GameItem from '../../molecules/GameItem';
 
 export default function FeatureGame() {
+  const [gameList, setGameList] = useState([]);
+
+  useEffect(async () => {
+    const response = await axios.get('https://bwa-storegg-eco.herokuapp.com/api/v1/players/landingpage');
+    console.log('data: ', response.data);
+    setGameList(response.data.data);
+  }, []);
+
   return (
     <section className="featured-game pt-50 pb-50">
       <div className="container-fluid">
@@ -14,11 +24,9 @@ export default function FeatureGame() {
           className="d-flex flex-row flex-lg-wrap overflow-setting justify-content-lg-between gap-lg-3 gap-4"
           data-aos="fade-up"
         >
-          <GameItem title="Super Mechs" category="Mobile" thumbnail="thumbnail-1" />
-          <GameItem title="Call of Duty: Modern" thumbnail="thumbnail-2" category="Mobile" />
-          <GameItem title="Mobile Legends" category="Mobile" thumbnail="thumbnail-3" />
-          <GameItem title="Clash of Clans" category="Mobile" thumbnail="thumbnail-4" />
-          <GameItem title="Valorant" category="Dekstop" thumbnail="thumbnail-5" />
+          {gameList.map((item) => (
+            <GameItem key={item._id} title={item.name} category={item.category.name} thumbnail={`https://bwa-storegg-eco.herokuapp.com/uploads/${item.thumbnail}`} />
+          ))}
         </div>
       </div>
     </section>
