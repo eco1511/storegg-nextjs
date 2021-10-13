@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import cx from 'classnames';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 export default function SignUpForm() {
   const [name, setName] = useState('');
@@ -18,8 +19,12 @@ export default function SignUpForm() {
       email,
       password,
     };
-    localStorage.setItem('user-form', JSON.stringify(userForm));
-    router.push('/sign-up-photo');
+    if (name === '' || email === '' || password === '') {
+      toast.error('Semua Data Harus Diisi');
+    } else {
+      localStorage.setItem('user-form', JSON.stringify(userForm));
+      router.push('/sign-up-photo');
+    }
   };
   return (
     <>

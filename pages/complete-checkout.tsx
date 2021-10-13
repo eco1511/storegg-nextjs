@@ -246,7 +246,7 @@ export default function CompleteCheckout() {
               Dashboard
             </a>
           </Link>
-          <Link href="/">
+          <Link href="https://wa.me/628979804126?text=Saya%20sudah%20melakukan%20pembayaran">
             <a
               className="btn btn-whatsapp fw-medium text-lg color-palette-1 rounded-pill"
               role="button"
