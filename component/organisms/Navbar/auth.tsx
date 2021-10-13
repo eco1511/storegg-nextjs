@@ -1,11 +1,32 @@
 import Link from 'next/link';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { JWTPayloadTypes, UserType } from '../../../services/data.types';
 
-interface AuthProps {
-    isLogin?: boolean;
-}
+export default function Auth() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState({
+    avatar: '',
+  });
+  const router = useRouter();
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      const jwtToken = atob(token);
+      const payload: JWTPayloadTypes = jwtDecode(jwtToken);
+      const userFromPayload: UserType = payload.player;
+      setIsLogin(true);
+      setUser(userFromPayload);
+    }
+  }, []);
 
-export default function Auth(props: Partial<AuthProps>) {
-  const { isLogin } = props;
+  const onLogout = () => {
+    Cookies.remove('token');
+    router.push('/');
+    setIsLogin(false);
+  };
   if (isLogin) {
     return (
       <li className="nav-item my-auto dropdown d-flex">
@@ -13,14 +34,14 @@ export default function Auth(props: Partial<AuthProps>) {
         <div>
           <a
             className="dropdown-toggle ms-lg-40"
-            href="/#"
+            href="/"
             role="button"
             id="dropdownMenuLink"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             <img
-              src="/img/avatar-1.png"
+              src={user.avatar}
               className="rounded-circle"
               width="40"
               height="40"
@@ -44,10 +65,8 @@ export default function Auth(props: Partial<AuthProps>) {
                 <a className="dropdown-item text-lg color-palette-2">Account Settings</a>
               </Link>
             </li>
-            <li>
-              <Link href="/sign-in">
-                <a className="dropdown-item text-lg color-palette-2">Log Out</a>
-              </Link>
+            <li onClick={onLogout}>
+              <a className="dropdown-item text-lg color-palette-2">Log Out</a>
             </li>
           </ul>
         </div>
