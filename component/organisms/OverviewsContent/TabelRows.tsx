@@ -6,7 +6,7 @@ interface TabelRowsProps {
     category: string;
     item: string;
     price: number;
-    status: 'pending' | 'success' | 'failed';
+    status: string;
     image: string;
 }
 export default function TabelRows(props: TabelRowsProps) {

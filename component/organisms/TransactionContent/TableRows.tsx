@@ -1,30 +1,32 @@
 import Link from 'next/link';
 import cx from 'classnames';
+import NumberFormat from 'react-number-format';
 
 interface TabelRowsProps {
     image: string;
     title: string;
     category: string;
-    item: number;
+    item: string;
     price: number;
-    status: 'Pending' | 'Success' | 'Failed';
+    status: string;
+    id: string;
 }
 export default function TableRows(props: TabelRowsProps) {
   const {
-    image, title, category, item, price, status,
+    image, title, category, item, price, status, id,
   } = props;
   const statusClass = cx({
     'float-start icon-status': true,
-    pending: status === 'Pending',
-    success: status === 'Success',
-    failed: status === 'Failed',
+    pending: status === 'pending',
+    success: status === 'success',
+    failed: status === 'failed',
   });
   return (
     <tr data-category="pending" className="align-middle">
       <th scope="row">
         <img
           className="float-start me-3 mb-lg-0 mb-3"
-          src={`/img/${image}.png`}
+          src={image}
           width="80"
           height="60"
           alt=""
@@ -44,7 +46,15 @@ export default function TableRows(props: TabelRowsProps) {
         </p>
       </td>
       <td>
-        <p className="fw-medium color-palette-1 m-0">{price}</p>
+        <p className="fw-medium color-palette-1 m-0">
+          <NumberFormat
+            value={price}
+            prefix="Rp. "
+            displayType="text"
+            thousandSeparator="."
+            decimalSeparator=","
+          />
+        </p>
       </td>
       <td>
         <div>
@@ -55,7 +65,7 @@ export default function TableRows(props: TabelRowsProps) {
         </div>
       </td>
       <td>
-        <Link href="/member/transactions/detail">
+        <Link href={`/member/transactions/${id}`}>
           <a
             className="btn btn-status rounded-pill text-sm"
           >

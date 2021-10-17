@@ -42,13 +42,3 @@ export async function setCheckOut(data: CheckOutType) {
     token: true,
   });
 }
-
-export async function GetMemberOverview() {
-  const url = `${ROOT_API}/${API_VERSION}/players/dashboard`;
-
-  return callAPI({
-    url,
-    method: 'GET',
-    token: true,
-  });
-}

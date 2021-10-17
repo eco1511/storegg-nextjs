@@ -20,14 +20,44 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "jsx-a11y/label-has-associated-control": ["off"],
+        "jsx-a11y/anchor-is-valid": ["off"],
+        "no-underscore-dangle": ["off"],
+        "linebreak-style": ["off"],
+        "react/react-in-jsx-scope": ["off"],
+        "import/no-unresolved": ["off"],
+        "react/jsx-props-no-spreading": ["off"],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
-        "react/react-in-jsx-scope": "off",
-        "linebreak-style": "off",
-        "jsx-a11y/anchor-is-valid": "off",
-        "react/jsx-props-no-spreading": "off",
-        "no-underscore-dangle": "off",
-        "import/no-unresolved": "off",
-        "import/extensions": "off",
-        "jsx-a11y/label-has-associated-control": "off"
+        "react/jsx-one-expression-per-line": ["off"],
+        "import/prefer-default-export": ["off"],
+        "object-curly-newline": ["off"],
+        "react/no-array-index-key": ["off"],
+        "max-len": ["off"],
+        "import/extensions": [
+        "off",
+        "ignorePackages",
+        {
+            "js": "never",
+            "jsx": "never",
+            "ts": "never",
+            "tsx": "never"
+        }
+        ]
+    },
+    "settings": {
+        "import/extensions": [
+            ".js",
+            ".jsx",
+            ".ts",
+            ".tsx"
+        ],
+        "import/parser": {
+            "@typescript-eslint/parser": [".ts", "tsx"]
+        },
+        "import/resolve": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", "tsx"]
+            }
+        }
     }
 }

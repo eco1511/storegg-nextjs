@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 export default function SignUpForm() {
   const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,6 +17,7 @@ export default function SignUpForm() {
   const onSubmit = () => {
     const userForm = {
       name,
+      username,
       email,
       password,
     };
@@ -26,6 +28,7 @@ export default function SignUpForm() {
       router.push('/sign-up-photo');
     }
   };
+
   return (
     <>
       <h2 className="text-4xl fw-bold color-palette-1 mb-10">Sign Up</h2>
@@ -39,6 +42,17 @@ export default function SignUpForm() {
           placeholder="Enter your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div className="pt-30">
+        <label className={className.label}>Username</label>
+        <input
+          type="text"
+          className="form-control rounded-pill text-lg"
+          aria-describedby="name"
+          placeholder="Enter your name"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
       </div>
       <div className="pt-30">

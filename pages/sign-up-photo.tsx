@@ -1,17 +1,19 @@
-import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import Image from 'next/dist/client/image';
 import { useRouter } from 'next/router';
 import { setSignUp } from '../services/auth';
 import { getGameCategory } from '../services/player';
+import { CategoryTypes } from '../services/data.types';
 
 export default function SignUpPhoto() {
   const [categories, setCategories] = useState([]);
   const [favorite, setFavorite] = useState('');
-  const [image, setImage] = useState('');
-  const [imagePreview, setImagePreview] = useState(null);
+  const [image, setImage] = useState<any>('');
+  const [imagePreview, setImagePreview] = useState<any>(null);
   const [localForm, setLocalForm] = useState({
     name: '',
+    username: '',
     email: '',
   });
   const router = useRouter();
@@ -39,7 +41,7 @@ export default function SignUpPhoto() {
     data.append('email', form.email);
     data.append('name', form.name);
     data.append('password', form.password);
-    data.append('username', form.name);
+    data.append('username', form.username);
     data.append('phoneNumber', '08123456789');
     data.append('role', 'user');
     data.append('status', 'Y');
@@ -49,7 +51,6 @@ export default function SignUpPhoto() {
     if (result.error) {
       toast.error(result.message);
     } else {
-      toast.success('Register Berhasil');
       router.push('/sign-up-success');
       localStorage.removeItem('user-form');
     }
@@ -71,7 +72,7 @@ export default function SignUpPhoto() {
                     name="avatar"
                     accept="image/png, image/jpeg"
                     onChange={(e) => {
-                      const img = e.target.files[0];
+                      const img = e.target.files![0];
                       setImagePreview(URL.createObjectURL(img));
                       return setImage(img);
                     }}
@@ -93,7 +94,7 @@ export default function SignUpPhoto() {
                   value={favorite}
                   onChange={(e) => setFavorite(e.target.value)}
                 >
-                  {categories.map((category) => (
+                  {categories.map((category: CategoryTypes) => (
                     <option
                       key={category._id}
                       value={category._id}
@@ -125,7 +126,6 @@ export default function SignUpPhoto() {
           </div>
         </form>
       </div>
-      <ToastContainer />
     </section>
   );
 }

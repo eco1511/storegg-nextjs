@@ -1,23 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { GetMemberOverview } from '../../../services/player';
+import { HistoryTransactionType, TopupCategoriesType } from '../../../services/data.types';
+import { GetMemberOverview } from '../../../services/member';
 import Categori from './Category';
 import TabelRows from './TabelRows';
 
 export default function OverviewsContent() {
   const [count, setCount] = useState([]);
   const [data, setData] = useState([]);
-  useEffect(async () => {
+
+  const getMemberOverviewAPI = useCallback(async () => {
     const response = await GetMemberOverview();
     if (response.error) {
       toast.error(response.message);
     } else {
-      console.log('data :', response);
       setCount(response.count);
       setData(response.data);
     }
   }, []);
+
+  useEffect(() => {
+    getMemberOverviewAPI();
+  }, []);
+
   const IMG = process.env.NEXT_PUBLIC_IMG;
+
   return (
     <main className="main-wrapper">
       <div className="ps-lg-0">
@@ -26,11 +33,11 @@ export default function OverviewsContent() {
           <p className="text-lg fw-medium color-palette-1 mb-14">Top Up Categories</p>
           <div className="main-content">
             <div className="row">
-              {count.map((item) => (
+              {count.map((item: TopupCategoriesType) => (
                 <Categori
                   key={item._id}
                   icon="ic-dekstop"
-                  nominal={item.value}
+                  nominal={item.valeu}
                 >
                   {item.name}
                 </Categori>
@@ -51,7 +58,7 @@ export default function OverviewsContent() {
                 </tr>
               </thead>
               <tbody>
-                {data.map((items) => (
+                {data.map((items: HistoryTransactionType) => (
                   <TabelRows
                     key={items._id}
                     title={items.historyVoucherTopup.gameName}
