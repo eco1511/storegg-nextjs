@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['bwa-storegg-serveradmin.up.railway.app'],
+    domains: ['https://bwa-storegg-serveradmin.up.railway.app/'],
   },
 };
